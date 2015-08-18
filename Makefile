@@ -155,7 +155,7 @@ ifneq ($(app),0)
 	    endif
 	  endif
 	endif
-	BIN_NAME = $(app)
+	BIN_NAME = user$(app)
 endif
 else
     app = 0
@@ -283,8 +283,7 @@ else
 	@mv eagle.app.flash.bin ../bin/upgrade/$(BIN_NAME).bin
 	@rm eagle.app.v6.*
 	@echo "Generate $(BIN_NAME).bin successully in folder bin/upgrade."
-	@echo "boot.bin------------>0x00000"
-	@echo "$(BIN_NAME).bin--->$(addr)"
+	@echo "This firmware support $(flash)KiB flash"
 endif
 
 	@echo "!!!"

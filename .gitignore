@@ -42,3 +42,10 @@ _temp_by_dltool
 # Debug files
 *.dSYM/
 >>>>>>> 89f0a59f08bea96cef46783176070a96da5601fc
+/Project/*.sdf
+/Project/*.suo
+/Project/*.vcxproj
+/Project/*.filters
+/Project/*.user
+/Project/esp_gemini/*.vcxproj
+/Project/esp_gemini/*.filters

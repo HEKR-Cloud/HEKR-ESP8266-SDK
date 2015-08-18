@@ -1,0 +1,9 @@
+.output
+*.s
+*.dump
+*.o
+Debug
+_temp_by_dltool
+*~
+/bin/at
+/app/user/src/.gitignore

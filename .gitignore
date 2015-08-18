@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .output
 *.s
 *.dump
@@ -7,3 +8,37 @@ _temp_by_dltool
 *~
 /bin/at
 /app/user/src/.gitignore
+=======
+# Object files
+*.o
+*.ko
+*.obj
+*.elf
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+
+# Shared objects (inc. Windows DLLs)
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Executables
+*.exe
+*.out
+*.app
+*.i*86
+*.x86_64
+*.hex
+
+# Debug files
+*.dSYM/
+>>>>>>> 89f0a59f08bea96cef46783176070a96da5601fc

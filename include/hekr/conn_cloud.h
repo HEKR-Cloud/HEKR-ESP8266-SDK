@@ -3,9 +3,6 @@
 #include "esp_def.h"
 #include "espconn.h"
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 typedef enum {
 	WIFI_DISCONNED = 0,		//Wi-Fi未连接
@@ -19,15 +16,10 @@ typedef enum {
 typedef void(*cloud_conn_event_cb_t)(cloud_conn_event_t event);
 typedef void(*recicve_server_data_cb_t)(void *data, size_t size);
 
+
 FUN_ATTRIBUTE void  connect_server(cloud_conn_event_cb_t cb);
 FUN_ATTRIBUTE void  disconnected_from_server(void);
 FUN_ATTRIBUTE void  reconnect_cloud(void);
-FUN_ATTRIBUTE uint8_t send_data_to_cloud(void *src, size_t size);
-FUN_ATTRIBUTE void start_connect_cloud(cloud_conn_event_cb_t cb);
+FUN_ATTRIBUTE uint8_t send_message_to_remote(char *tid, void *data, size_t size);
 FUN_ATTRIBUTE void register_receive_server_data_callback(recicve_server_data_cb_t cb);
-
-#ifdef __cplusplus
-}
-#endif
-
 #endif

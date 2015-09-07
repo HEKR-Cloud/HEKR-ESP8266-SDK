@@ -1,5 +1,5 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.5 by [xuefeng.zeng@hekr.me](mailto:xuefeng.zeng@hekr.me "xuefeng.zeng@hekr.me")** 2015/8/18 17:40:40 
+**v1.0.6 by [xuefeng.zeng@hekr.me](mailto:xuefeng.zeng@hekr.me "xuefeng.zeng@hekr.me")** 2015/9/7 20:15:00 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
 	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)
@@ -90,11 +90,17 @@
 
 ## 2-3 向服务器发送数据
 
-	uint8_t send_data_to_cloud(void *src ,size_t size)
+	uint8_t send_message_to_remote(char *tid, void *data, size_t size)
+
+### 说明
+
+- 给远端终端单播或者组播消息，当`tid==NULL`时为组播。
+- 目前只支持组播
 
 ### 参数
 
-- `src` 待发送的数据
+- `tid` 终端ID号
+- `data` 待发送的数据
 - `size` 数据的大小 （单位：`字节`）
 
 ### 返回值

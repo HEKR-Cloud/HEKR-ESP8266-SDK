@@ -11,7 +11,7 @@ typedef struct
 	uint8 ssid[32];
 	uint8 ssid_len;
 	uint8 password[64];
-	uint8 ssid_hidden;	//hidden:0 ²»Òş²Ø  1 Òş²Ø 2 ½ûÓÃ  3 ½ûÓÃ10sºóÆôÓÃ
+	uint8 ssid_hidden;	//hidden:0 ä¸éšè—  1 éšè— 2 ç¦ç”¨  3 ç¦ç”¨10såå¯ç”¨
 }t_app_set_softap_configs;
 
 typedef enum
@@ -48,27 +48,15 @@ struct wifi_event_callback
 
 typedef enum
 {
-	EVENT_CONNECT_WIFI_FAIL = 0,	//ÅäÖÃÊ§°Ü£¬Î´ÄÜÁ¬½ÓÉÏWi-Fi
-	EVENT_HEKR_CONFIG_TIMEOUT,		//ÅäÖÃ³¬Ê±
-	EVENT_HEKR_CONFIG_FINISH		//ÅäÖÃ³É¹¦£¬½«»á×Ô¶¯È¥Á¬½Ó·şÎñÆ÷
+	EVENT_CONNECT_WIFI_FAIL = 0,	//é…ç½®å¤±è´¥ï¼Œæœªèƒ½è¿æ¥ä¸ŠWi-Fi
+	EVENT_HEKR_CONFIG_TIMEOUT,		//é…ç½®è¶…æ—¶
+	EVENT_HEKR_CONFIG_FINISH		//é…ç½®æˆåŠŸï¼Œå°†ä¼šè‡ªåŠ¨å»è¿æ¥æœåŠ¡å™¨
 }config_event_t;
 
 typedef void( *hekr_config_event_cb_t)(config_event_t event);
 
 
-FUN_ATTRIBUTE void  wifi_softap_set(t_app_set_softap_configs *configs);
-FUN_ATTRIBUTE void  wifi_softap_key_get(char *key);
-FUN_ATTRIBUTE bool  wifi_get_mac_str(char *des, uint8_t if_index);
-FUN_ATTRIBUTE void  wifi_station_set(char *ssid, char *password);
-FUN_ATTRIBUTE void  gemini_network_init(wifi_init_set set);
-FUN_ATTRIBUTE void  wifi_scanning();
-FUN_ATTRIBUTE void wifi_config_reset(void);
-FUN_ATTRIBUTE wifi_status_t  update_device_network_state(void);
-FUN_ATTRIBUTE void  check_station_connect_and_connect_cloud(void);
-FUN_ATTRIBUTE bool  gemini_wifi_mode_switch(wifi_mode_t opmode);
-FUN_ATTRIBUTE void wifi_connect_state_check(void *arg);
-FUN_ATTRIBUTE void inline wifi_event_callback_disable(struct wifi_event_callback *p);
-FUN_ATTRIBUTE void  hekr_config_callback(wifi_station_config_t *config);
+FUN_ATTRIBUTE void	wifi_config_reset(void);
 FUN_ATTRIBUTE void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout);
 FUN_ATTRIBUTE void hekr_config_stop(void);
 

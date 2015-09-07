@@ -1,4 +1,4 @@
-#ifndef __DEVICE_INFO_H__
+﻿#ifndef __DEVICE_INFO_H__
 #define __DEVICE_INFO_H__
 #include <esp_def.h>
 

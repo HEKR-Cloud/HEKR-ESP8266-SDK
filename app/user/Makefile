@@ -37,6 +37,7 @@ DEFINES += -D__ESP8266__
 
 INCLUDES := $(INCLUDES) -I $(PDIR)include
 INCLUDES += -I ./
+INCLUDES += -I ../../include/hekr
 PDIR := ../$(PDIR)
 sinclude $(PDIR)Makefile
 

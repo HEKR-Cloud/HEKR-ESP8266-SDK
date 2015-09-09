@@ -4,3 +4,4 @@
 
 - API见目录 `document/esp8266_sdk_api.md`
 - SDK使用说明 `document/esp8266_sdk_user_manual.md`
+- SDK示例代码 `/app/user/user_main.c`

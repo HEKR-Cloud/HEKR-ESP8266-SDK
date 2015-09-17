@@ -16,11 +16,11 @@
 - 参数`FIRMWARETYPE` 选择编译生成固件类型，用于云端升级
 - 参数`FLASHSIZE` Flash的大小 (单位`KiB`)
 
-###示例
+### 示例
 
 - `make app=1 flash=2048`  生成支持2048KiB大小FLASH `user1.bin`
 
-###说明
+### 说明
 
 - 生成烧录所需的固件请`user1.bin` ，`user2.bin` 云端升级时才需要 
 
@@ -53,20 +53,20 @@
 
 ##4-3 `flashtool.py` 脚本使用说明
 
-#### 1-1 手动烧录
+### 手动烧录
 
 1. 执行 `./flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ./xxx.bin`
 2. 将模块GPIO0拉低，然后重启，开始下载。
 
-#### 1-2 自动烧录
+### 自动烧录
 
 `由脚本控制串口芯片的RTS和DTR,让ESP进入下载模式`
 
-1. 需要硬件上短接串口模块的`RTS`和ESP模块的`RST`引脚，串口模块的`DTR`和ESP模块的`GPIO0`引脚
+1. 需要硬件上短接`串口模块的RTS`和`ESP模块的RST`引脚，`串口模块的DTR`和`ESP模块的GPIO0`引脚
 
 2. 执行 `./flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ./xxx.bin` 
 
-#### 2-1 参数说明
+### 参数说明
 
 - `/dev/ttyUSB0` 待下载的设备
 - `921600`下载波特率
@@ -74,7 +74,7 @@
 - `0x01000`烧录地址
 - `./xxx.bin` 待烧录的文件
 
-##4-3 `debug.py` 脚本使用说明
+## 4-3`debug.py` 脚本使用说明
 
 完成编译固件和下载固件
 

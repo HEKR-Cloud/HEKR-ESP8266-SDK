@@ -1,5 +1,5 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.6 by [xuefeng.zeng@hekr.me](mailto:xuefeng.zeng@hekr.me "xuefeng.zeng@hekr.me")** 2015/9/7 20:15:00 
+**v1.0.6 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/7 20:15:00 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
 	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)

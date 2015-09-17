@@ -1,6 +1,6 @@
 #HEKR SDK 使用说明
 
-**v1.0.0 by [xuefeng.zeng@hekr.me](mailto:xuefeng.zeng@hekr.me "xuefeng.zeng@hekr.me")** 2015/8/18 17:40:40  
+**v1.1.0 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/17 16:51:59   
 
 ## 1-1 编译环境搭建
 
@@ -23,7 +23,7 @@
 ###说明
 
 - 生成烧录所需的固件请`user1.bin` ，`user2.bin` 云端升级时才需要 
-## 3-1 烧录说明
+## 3-1 烧录对应地址说明
 
 <table>
 
@@ -37,6 +37,54 @@
 
 </table>
 
-###注意：
+##4-1 烧录工具
+
+- `Windows` 平台使用 `ESP_DOWNLOAD_TOOL` [官网链接](http://bbs.espressif.com/viewtopic.php?f=57&t=433) [备用下载地址](http://pan.baidu.com/s/1DfqJc)
+- `Linux` 平台用`flashtool.py` 和 `debug.py`脚本 [链接](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/tree/master/app)
+
+##4-2 `ESP_DOWNLOAD_TOOL` 使用说明
+
+1. 按照 `3-1` 设置好需要下载的文件和对应地址
+2. `FLASH_SIZE` 选择对应`16Mbit`(16Mbit以上的FLASHZ设置保持和16Mbit相同)
+3.  选择对应模块的COM口
+4.  将模块GPIO0拉低，然后重启，模块将会进入下载模式。
+
+##4-3 `flashtool.py` 脚本使用说明
+
+#### 1-1 手动烧录
+
+1. 执行 `./flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ./xxx.bin`
+2. 将模块GPIO0拉低，然后重启，开始下载。
+
+#### 1-2 自动烧录
+
+`由脚本控制串口芯片的RTS和DTR,让ESP进入下载模式`
+
+1. 需要硬件上短接串口模块的`RTS`和ESP模块的`RST`引脚，串口模块的`DTR`和ESP模块的`GPIO0`引脚
+
+2. 执行 `./flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ./xxx.bin` 
+
+#### 2-1 参数说明
+
+- `/dev/ttyUSB0` 待下载的设备
+- `921600`下载波特率
+- `16m` FLASH大小，16m对应16Mbit Flash （16Mbit 以上的Flash也使用这个设置）
+- `0x01000`烧录地址
+- `./xxx.bin` 待烧录的文件
+
+##4-3 `debug.py` 脚本使用说明
+
+完成编译固件和下载固件
+
+#### 参数
+
+- `--all`完成编译固件并烧录所有固件（用于擦除原来的设置）
+- `--onebin` 完成编译固件并只烧录用户固件（设置不会丢失）
+
+#### 示例
+
+`./debug.py --all`
+
+## 5-1注意事项：
 -	Flash 大小必须使用`2MiB`或以上
 -	Flash 地址`0x100000`到`0x1FA000`被文件系统所用，用户不要往里面写数据

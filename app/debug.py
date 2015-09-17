@@ -21,6 +21,8 @@ make_one_bin = 'make APP=1'
 
 make_two_bin = 'make clean&&make APP=1&&make clean&&make APP=2&&make clean'
 
+make = make_one_bin
+
 if __name__ == '__main__':
     if len(sys.argv) > 1:
         if sys.argv[1] == '--all':

@@ -1,11 +1,14 @@
 /**********************************************************************************************//**
  * @file	user_main.c
+ *						  by www.hekr.me
+ * HEKR ESP8266 SMART PLUG DEMO 
+ * 氦氪智能插座示例代码
  *
- * HEKR ESP8266 SMART PLUG DEMO
+ * 说明：
+ *		通过app控制模块的GPIO14引脚的高低电平
  *
- * 
  **************************************************************************************************/
- 
+
 #include <esp_def.h>
 #include <conn_cloud.h>
 #include <module_wifi.h>
@@ -79,20 +82,22 @@ fail:
 	return ret;
 }
 
-void device_id_set()
+
+FUN_ATTRIBUTE void device_id_set(void)
 {
 	g_product_info.id.mid = PLUG_MID;
 	g_product_info.id.pid = PLUG_PID;
 	g_product_info.id.cid = PLUG_CID;
 
 }
+
+
 FUN_ATTRIBUTE void system_init_done(void)
 {
 	device_id_set();
-
 	iotss_bind_demo_plug(g_vm);
-if (check_wifi_config_exist() == 0)
-	hekr_config_start(NULL, 5*60 * 1000);
+	if (check_wifi_config_exist() == 0)
+		hekr_config_start(NULL, 5 * 60 * 1000);
 }
 
 FUN_ATTRIBUTE void hekr_main(void)

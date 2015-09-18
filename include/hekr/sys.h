@@ -8,4 +8,6 @@ typedef void (*hekr_system_init_done_cb_t)(void);
 void inline product_func_init(void);
 char * FUN_ATTRIBUTE get_product_state(void);
 void FUN_ATTRIBUTE product_power_control(uint8 power);
+FUN_ATTRIBUTE inline 
+uint8_t  check_wifi_config_exist(void);
 #endif

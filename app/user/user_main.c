@@ -1,7 +1,8 @@
 /**********************************************************************************************//**
  * @file	user_main.c
  *
- * HEKR ESP8266 TEST CASE
+ * HEKR ESP8266 SMART PLUG DEMO
+ *
  * 
  **************************************************************************************************/
  
@@ -14,13 +15,11 @@
 #include <iotss.h>
 #include "demo_plug.h"
 
-/*
-*   注意：用完之后需要释放数据
-*/
+
 char * FUN_ATTRIBUTE get_plug_state(void)
 {
 #define MSG "(state \"power\" 256)"
-	uint8 state = !GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
+	uint8 state = GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
 	char *msg = (char *)os_zalloc(sizeof(MSG));
 	if (msg == NULL)
 		return NULL;
@@ -32,7 +31,7 @@ char * FUN_ATTRIBUTE get_plug_state(void)
 void FUN_ATTRIBUTE product_power_control(uint8 power)
 {
 
-	gpio_output(PLUG_POWR_PIN, !power);
+	gpio_output(PLUG_POWR_PIN, power);
 	char *msg = get_plug_state();
 	if (msg == NULL)
 	{
@@ -92,6 +91,7 @@ FUN_ATTRIBUTE void system_init_done(void)
 	device_id_set();
 
 	iotss_bind_demo_plug(g_vm);
+if (check_wifi_config_exist() == 0)
 	hekr_config_start(NULL, 5*60 * 1000);
 }
 

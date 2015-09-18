@@ -8,71 +8,100 @@
 #include <esp_def.h>
 #include <conn_cloud.h>
 #include <module_wifi.h>
+#include <module_gpio.h>
 #include <log.h>
 #include <uart.h>
+#include <iotss.h>
+#include "demo_plug.h"
 
-
-FUN_ATTRIBUTE void test_hekr_config(config_event_t event)
+/*
+*   注意：用完之后需要释放数据
+*/
+char * FUN_ATTRIBUTE get_plug_state(void)
 {
-	os_printf("event =%d\n",event);
+#define MSG "(state \"power\" 256)"
+	uint8 state = !GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
+	char *msg = (char *)os_zalloc(sizeof(MSG));
+	if (msg == NULL)
+		return NULL;
+	sprintf(msg, "(state \"power\" %u)", state);
+	return msg;
+
 }
 
-FUN_ATTRIBUTE void debug_print_hex(uint8_t *data, size_t size)
+void FUN_ATTRIBUTE product_power_control(uint8 power)
 {
-	size_t i;
-	for ( i = 0; i<size; i++)
+
+	gpio_output(PLUG_POWR_PIN, !power);
+	char *msg = get_plug_state();
+	if (msg == NULL)
 	{
-		os_printf("%2X", data[i]);
+		os_printf("get_product_state error");
+		goto fail;
 	}
-	os_printf("\n");
+	send_data_to_cloud(msg, strlen(msg));
+	free(msg);
+done:
+	return;
+fail:
+	return;
 }
 
-FUN_ATTRIBUTE void cloud_data_test(void *arg, size_t size)
+
+static void FUNC_MODIFIER bind_controlpower(iotss_native_proc_args_t *args)
 {
-	debug_print_hex((uint8_t *)arg, size);
-	if (((uint8_t *)arg)[0] == 0x01)
-	{
-		hekr_config_stop();
-	}
-	uint8_t test[] = { 0x56,0x48,0x34,0x98 };
-	switch (((uint8_t *)arg)[0])
-	{
-	case 0x01:
-		send_message_to_remote(NULL, test, sizeof(test));
-		break;
-	case 0x02:
-		hekr_config_stop();
-		break;
-	case 0x03:
-		hekr_config_start(test_hekr_config, 50 * 1000);
-		break;
-	default:
-		break;
-	}
-	
+	iotss_native_proc_arg_t *arg_t = iotss_native_proc_args_get_arg(args);
+	product_power_control(arg_t->u.value_int);
+	if (arg_t != NULL)
+		iotss_native_proc_arg_destroy(arg_t);
 }
 
-FUN_ATTRIBUTE void uart_test(uint8_t data)
+
+static iotss_static_bindings_item_t tbl_static_bindings[] =
 {
-	os_printf("%02X", data);
-	if (data == 0x01)
+	IOTSS_STATIC_BINDINGS_ITEM("controlpower", bind_controlpower, 1, 1, "i"),
+	IOTSS_STATIC_BINDINGS_ITEM_FINAL
+
+};
+
+int FUNC_MODIFIER iotss_bind_demo_plug(iotss_vm_t *vm)
+{
+	int ret = 0;
+
+	/* Bind static bindings */
+	if (iotss_vm_bind_static_bindings_from_items(vm, \
+		"static-bindings-std", \
+		tbl_static_bindings) != 0)
 	{
-		hekr_config_stop();
+		ret = -1; goto fail;
 	}
+
+fail:
+	return ret;
 }
 
+void device_id_set()
+{
+	g_product_info.id.mid = PLUG_MID;
+	g_product_info.id.pid = PLUG_PID;
+	g_product_info.id.cid = PLUG_CID;
+
+}
 FUN_ATTRIBUTE void system_init_done(void)
 {
-	hekr_config_start(test_hekr_config, 5*60 * 1000);
+	device_id_set();
+
+	iotss_bind_demo_plug(g_vm);
+	hekr_config_start(NULL, 5*60 * 1000);
 }
 
 FUN_ATTRIBUTE void hekr_main(void)
 {
-	uart_init(BIT_RATE_9600, BIT_RATE_9600);
+	uart_init(0, BIT_RATE_9600);
 	system_log_set(PORT_UART1);
 	os_printf("\n\nsystem run !! \n\n");
 	os_printf("sdk ver=%s\n", get_hekr_sdk_version());
-	register_uart_data_received_callback(uart_test);
-	register_receive_server_data_callback(cloud_data_test);
 	register_hekr_system_init_done_callback(system_init_done);
+	os_printf("Demo plug\n");
+
 }

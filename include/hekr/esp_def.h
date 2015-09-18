@@ -41,8 +41,6 @@ extern "C" {
 #define uint16_t	uint16
 #define uint32_t	uint32
 
-
-
 #ifdef __cplusplus
 }
 #endif

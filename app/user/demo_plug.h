@@ -1,4 +1,4 @@
-#ifndef __DEMO_PLUG_H__
+﻿#ifndef __DEMO_PLUG_H__
 #define __DEMO_PLUG_H__
 
 #include <device_info.h>
@@ -11,7 +11,8 @@
 #define PLUG_CID		50
 
 /*product pin define*/
-#define PLUG_POWR_PIN					14
+#define PLUG_POWR_PIN	14
+#define PLUG_KEY_PIN	12  
 
 extern product_info_t g_product_info;
 

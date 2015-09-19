@@ -1,11 +1,12 @@
-/**********************************************************************************************//**
+﻿/**********************************************************************************************//**
  * @file	user_main.c
  *						  by www.hekr.me
  * HEKR ESP8266 SMART PLUG DEMO 
- * ������ܲ���ʾ������
+ * 氦氪智能插座示例代码
  *
- * ˵����
- *		ͨ��app����ģ���GPIO14���ŵĸߵ͵�ƽ
+ * 说明：
+ *		通过app控制模块的GPIO14引脚的高低电平
+ *		按键引脚为GPIO12：长按为 恢复出厂配置 短按为：翻转GPIO14电平
  *
  **************************************************************************************************/
 
@@ -13,6 +14,7 @@
 #include <conn_cloud.h>
 #include <module_wifi.h>
 #include <module_gpio.h>
+#include <sys.h>
 #include <log.h>
 #include <uart.h>
 #include <iotss.h>
@@ -58,6 +60,15 @@ static void FUNC_MODIFIER bind_controlpower(iotss_native_proc_args_t *args)
 		iotss_native_proc_arg_destroy(arg_t);
 }
 
+FUN_ATTRIBUTE 
+void  plug_power_change(void)
+{
+
+	uint8 pin_state = GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
+	product_power_control(!pin_state);
+
+}
+
 
 static iotss_static_bindings_item_t tbl_static_bindings[] =
 {
@@ -94,19 +105,44 @@ FUN_ATTRIBUTE void device_id_set(void)
 
 FUN_ATTRIBUTE void system_init_done(void)
 {
+	/*设置设备id*/
 	device_id_set();
+	/*虚拟机扩展接口*/
 	iotss_bind_demo_plug(g_vm);
+	/*判断wifi设置是否存在*/
 	if (check_wifi_config_exist() == 0)
 		hekr_config_start(NULL, 5 * 60 * 1000);
 }
+
+void inline plug_hardware_init(void)
+{
+	/*注册状态指示灯*/
+	device_status_led_task_install(BIT4, 0);
+
+	/*注册按键中断*/
+	register_key_intrrupt_handle
+		(
+			PLUG_KEY_PIN,
+			GPIO_PIN_INTR_NEGEDGE,
+			3000,
+			(callbcak_handle_t *)&plug_power_change,
+			(callbcak_handle_t *)&wifi_config_reset
+		);
+}
+
+/**
+ * 用户程序入口  
+ */
 
 FUN_ATTRIBUTE void hekr_main(void)
 {
 	uart_init(0, BIT_RATE_9600);
 	system_log_set(PORT_UART1);
-	os_printf("\n\nsystem run !! \n\n");
 	os_printf("sdk ver=%s\n", get_hekr_sdk_version());
-	register_hekr_system_init_done_callback(system_init_done);
 	os_printf("Demo plug\n");
 
+	/*注册系统初始化完成之后的回调*/
+	register_hekr_system_init_done_callback(system_init_done);
+
+	plug_hardware_init();
 }

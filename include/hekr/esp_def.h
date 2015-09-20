@@ -1,6 +1,5 @@
-﻿#ifndef __ESP_DEF_H__
+#ifndef __ESP_DEF_H__
 #define __ESP_DEF_H__
-#include <c_types.h>
 #include <ets_sys.h>
 #include <os_type.h>
 #include <mem.h>
@@ -36,10 +35,6 @@ extern "C" {
 #define sprintf		os_sprintf
 #define printf		os_printf
 
-#define int8_t		int8	
-#define uint8_t		uint8
-#define uint16_t	uint16
-#define uint32_t	uint32
 
 #ifdef __cplusplus
 }

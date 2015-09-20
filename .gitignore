@@ -50,3 +50,8 @@ _temp_by_dltool
 /Project/esp_gemini/*.vcxproj
 /Project/esp_gemini/*.filters
 /Project/.vs/Project_EspGemini2.2/v14/*.suo
+/Project/*.filters
+/Project/*.user
+/Project/*
+/Project/*.suo
+/Project/*.vcxproj

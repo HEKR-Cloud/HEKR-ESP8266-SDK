@@ -21,22 +21,27 @@
 #include <iotss.h>
 #include "demo_plug.h"
 
-
-char * FUN_ATTRIBUTE get_plug_state(void)
+FUN_ATTRIBUTE
+char * get_plug_state(void)
 {
 #define MSG "(state \"power\" 256)"
 	uint8 state = GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
 	char *msg = (char *)os_zalloc(sizeof(MSG));
 	if (msg == NULL)
-		return NULL;
+	{
+		goto fail;
+	}
 	sprintf(msg, "(state \"power\" %u)", state);
+	
+done:
 	return msg;
-
+fail:
+	return NULL;
 }
 
-void FUN_ATTRIBUTE product_power_control(uint8 power)
+FUN_ATTRIBUTE
+void  product_power_control(uint8 power)
 {
-
 	gpio_output(PLUG_POWR_PIN, power);
 	char *msg = get_plug_state();
 	if (msg == NULL)
@@ -46,14 +51,15 @@ void FUN_ATTRIBUTE product_power_control(uint8 power)
 	}
 	send_data_to_cloud(msg, strlen(msg));
 	free(msg);
+
 done:
 	return;
 fail:
 	return;
 }
 
-
-static void FUNC_MODIFIER bind_controlpower(iotss_native_proc_args_t *args)
+FUN_ATTRIBUTE
+static void bind_controlpower(iotss_native_proc_args_t *args)
 {
 	iotss_native_proc_arg_t *arg_t = iotss_native_proc_args_get_arg(args);
 	product_power_control(arg_t->u.value_int);
@@ -62,12 +68,10 @@ static void FUNC_MODIFIER bind_controlpower(iotss_native_proc_args_t *args)
 }
 
 FUN_ATTRIBUTE 
-void  plug_power_change(void)
+void plug_power_change(void)
 {
-
 	uint8 pin_state = GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
 	product_power_control(!pin_state);
-
 }
 
 
@@ -75,10 +79,10 @@ static iotss_static_bindings_item_t tbl_static_bindings[] =
 {
 	IOTSS_STATIC_BINDINGS_ITEM("controlpower", bind_controlpower, 1, 1, "i"),
 	IOTSS_STATIC_BINDINGS_ITEM_FINAL
-
 };
 
-int FUNC_MODIFIER iotss_bind_demo_plug(iotss_vm_t *vm)
+FUNC_MODIFIER
+int  iotss_bind_demo_plug(iotss_vm_t *vm)
 {
 	int ret = 0;
 
@@ -95,7 +99,8 @@ fail:
 }
 
 
-FUN_ATTRIBUTE void device_id_set(void)
+FUN_ATTRIBUTE 
+void device_id_set(void)
 {
 	g_product_info.id.mid = PLUG_MID;
 	g_product_info.id.pid = PLUG_PID;
@@ -104,7 +109,8 @@ FUN_ATTRIBUTE void device_id_set(void)
 }
 
 
-FUN_ATTRIBUTE void system_init_done(void)
+FUN_ATTRIBUTE 
+void system_init_done(void)
 {
 	/*设置设备id*/
 	device_id_set();
@@ -135,7 +141,8 @@ void inline plug_hardware_init(void)
  * 用户程序入口  
  */
 
-FUN_ATTRIBUTE void hekr_main(void)
+FUN_ATTRIBUTE 
+void hekr_main(void)
 {
 	uart_init(0, BIT_RATE_9600);
 	system_log_set(PORT_UART1);
@@ -144,6 +151,5 @@ FUN_ATTRIBUTE void hekr_main(void)
 
 	/*注册系统初始化完成之后的回调*/
 	register_hekr_system_init_done_callback(system_init_done);
-
 	plug_hardware_init();
 }

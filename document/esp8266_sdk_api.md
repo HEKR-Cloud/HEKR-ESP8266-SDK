@@ -1,5 +1,5 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.6 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/7 20:15:00 
+**v1.0.7 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/22 20:33:28 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
 	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)
@@ -175,7 +175,7 @@
 
 - `无`
 
-## 2-3 向服务器发送数据
+## 2-3 向远程终端发送消息
 
 	uint8_t send_message_to_remote(char *tid, void *data, size_t size)
 
@@ -272,7 +272,7 @@
 
 	typedef void(uart_data_received_cb_t)(uint8_t data);
 
-##3-2 注册按键中断处理函数
+##3-2 注册按键中断
 
 	uint8_t register_key_intrrupt_handle(
 		size_t pin,
@@ -298,40 +298,32 @@
 
 - `#include <module_key.h>`
 
+### 示例
+
+	register_key_intrrupt_handle
+		(
+			13,
+			GPIO_PIN_INTR_NEGEDGE,
+			3000,
+			(callbcak_handle_t *)&plug_power_change,
+			(callbcak_handle_t *)&wifi_config_reset
+		);
+
+- 说明 ：注册`GPIO13`引脚拉低`3000ms`执行`wifi_config_reset()`,短于`3000ms`执行`plug_power_change()`
+
+
 ###参数类型定义
+
 	typedef enum {
 	    GPIO_PIN_INTR_DISABLE = 0,	//中断禁止
 	    GPIO_PIN_INTR_POSEDGE = 1,	//上升沿触发
 	    GPIO_PIN_INTR_NEGEDGE = 2,	//下降沿触发
 	    GPIO_PIN_INTR_ANYEGDE = 3,	//上升沿或下降沿触发
 	    GPIO_PIN_INTR_LOLEVEL = 4,	//低电平触发
-	    GPIO_PIN_INTR_HILEVEL = 5	//高电平触发cb
+	    GPIO_PIN_INTR_HILEVEL = 5	//高电平触发
 	} GPIO_INT_TYPE;
 
 	typedef void (callbcak_handle_t)(vcboid *arg);
-
-##3-3 注册GPIO中断处理函数
-
-	void gpio_interrupt_register(
-		void(*fun)(void *agrv),
-		void *argv,
-		unsigned char gpio,
-		GPIO_INT_TYPE intr_state)
-
-### 参数
-
-- `fun()` gpio中断处理函数
-- `argv` 参数
-- `gpio` gpio引脚
-- `intr_state` 中断类型
-
-### 返回值
-
-- `无`
-
-### 头文件
-
-- `#include <module_gpio.h>`
 
 ##3-4 设置gpio上拉使能
 

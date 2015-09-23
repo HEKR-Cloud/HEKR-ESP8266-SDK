@@ -1,5 +1,5 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.7 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/22 20:33:28 
+**v1.0.8 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/23 17:24:55 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
 	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)
@@ -67,58 +67,24 @@
 
 	typedef enum
 	{
-		DEVICE_WLAN_CONNECTED = 0,
-		DEVICE_WLAN_IDLE,
-		DEVICE_WLAN_CONNECTING,
-		DEVICE_WLAN_CONNECT_TIMEOUT,
-		DEVICE_WLAN_PASSWOR_WRONG,
-		DEVICE_WLAN_AP_CANNOT_FIND,
-		GOT_SERVER_IP,
-		LOGGED_IN_SERVER,
-		UART0_INTR,
-		COMMAND_CONFIRM,
-		CONNECT_CLOUD_DISABLE,
-		HEKR_CONFIG_RUNNING,
-		SOFTAP_CONFIG_RUNNING,
-		ACCESSKEY_SET_ENABLE,
-		ACCESSKEY_SET_FINISH,
-		LOG_PRINT_ENABLE,
-		CLOUD_SEND_QUEUE_FINISH,
-		VM_EVAL_QUEUE_FINISH,
-		VM_EVAL_PORT_LAN,
-		VM_EVAL_PORT_UART0,
-		VM_EVAL_PORT_CLOUD,
-		VM_EVAL_PORT_INTERNAL
+		DEVICE_WLAN_CONNECTED = 0,		//设备连接上wifi
+		DEVICE_WLAN_CONNECTING =2,		//正在连接wifi
+		GOT_SERVER_IP =6,				//通过DNS服务成功获取的服务器IP
+		LOGGED_IN_SERVER =7,			//成功登入服务器
+		HEKR_CONFIG_RUNNING =11,		//一件配置模式正在运行
+		SOFTAP_CONFIG_RUNNING =12,		//热点配置模式正在运行
+		LOG_PRINT_ENABLE =15			//LOG输出开启
 	}device_status_type_t;
 
-## 1-4 注册设备状态改变时的回调函数
 
-	void register_device_status_change_callback(device_status_change_callback_t *cb)
-
-### 参数
-
-- `cb` 设备状态改变时的回调函数
-
-###返回值
-
-- `无`
-
-###头文件
-
-- `include<device_status.h>`
-
-###参数类型定义
-
-	typedef void device_status_change_callback_t(device_status_type_t item,uint8 current_state)
-
-## 1-5 启用设备状态指示引脚
+## 1-4 设置设备状态指示灯
 
 	void device_status_led_task_install(uint32_t pin, uint32_t reverse)
 
 ### 参数
 
 - `pin` 设备状态指示引脚led1
-- `reverse` 设备状态指示引脚led2，与led1电平状态相反。通常不需要设置，即值为0
+- `reverse` 设置需要取反的引脚。通常不需要设置，即值为0
 
 ###返回值
 
@@ -131,7 +97,15 @@
 ###说明
 
 - 该函数启用led引脚用来指示设备当前状态，不同状态时led闪烁频率不一致。
-- 不同状态对应闪烁频率关系：`HEKR_CONFIG_RUNNING时ON-1.5s,OFF-1.5s`; `LOGGED_IN_SERVER时ON-0.1s,OFF-5s`; `GOT_SERVER_IP时ON-0.1s,OFF-1s`; `DEVICE_WLAN_CONNECTED时ON-0.1s,OFF-0.5s`;
+
+
+### 状态灯：
+
+- 一件配置模式时 亮1.5s灭1.5s
+- 服务器连接正常 5s间隔闪烁
+- 设置登录服务器失败 1s间隔闪烁
+- DNS解析失败 0.5s间隔闪烁
+- 未连接Wi-Fi 指示灯长亮
 
 ##2-1 连接服务器
 
@@ -195,27 +169,7 @@
 - `1` 成功
 - `0` 失败
 
-##2-4 注册收到服务器数据的回调函数
-
-	void register_receive_server_data_callback(recicve_server_data_cb_t cb)
-
-### 参数
-
-- `cb` 收到服务器数据的回调函数
-
-### 返回值
-
-- `无`
-
-### 头文件
-
-- `#include <conn_cloud.h>`
-
-### 参数类型定义
-
-	typedef void(*recicve_server_data_cb_t)(void *data, size_t size);
-
-## 2-5 启动升级
+## 3-1 设备升级
 
 	void start_update(char *bin_dir)
 
@@ -231,48 +185,17 @@
 
 - `<module_upgrade.h>`
 
-## 2-6 检查Flash中是否存在AP信息
-
-	uint8_t  check_wifi_config_exist(void)
-
-### 参数
-
-- `无`
-
-### 返回值
-
-- `1` 存在
-- `0` 不存在
-
-###头文件
-
-- `<module_wifi.h>`
-
 ###说明
 
-- 如果设备连接过AP，那么AP信息会保存到flash中，再次启动时会自动连接AP。
+- 固件名格式：`*****1.bin` 和 `*****2.bin` 如：`user1.bin user2.bin` 
+- 固件1和2 要放在同一目录下，设备会自动下载对应的固件
 
-##3-1 注册串口收到数据的回调函数
+### 示例
 
-	void register_uart_data_received_callback(uart_data_received_cb_t *cb)
+	start_update("http://192.168.1.22/firmware1.bin");
 
-### 参数
 
-- `cb` 串口回调函数
-
-### 返回值
-
-- `无`
-
-### 头文件
-
-- `#include <uart.h>`
-
-### 参数类型定义
-
-	typedef void(uart_data_received_cb_t)(uint8_t data);
-
-##3-2 注册按键中断
+##4-1 注册按键中断
 
 	uint8_t register_key_intrrupt_handle(
 		size_t pin,
@@ -325,24 +248,7 @@
 
 	typedef void (callbcak_handle_t)(vcboid *arg);
 
-##3-4 设置gpio上拉使能
-
-	void gpio_pullup_set(uint8 gpio, uint8  enable)
-
-### 参数
-
-- `gpio` gpio引脚
-- `enable` 使能，非0表示使能，0表示禁用
-
-### 返回值
-
-- `无`
-
-### 头文件
-
-- `#include <module_gpio.h>`
-
-## 4-1获取SDK版本号
+## 5-1获取SDK版本号
 
 	char *get_hekr_sdk_version(void)
 
@@ -359,7 +265,7 @@
 
 - `#include <device_info.h>`
 
-## 4-2 系统日志
+## 5-2 系统日志
 	
 	void system_log_set(log_port_t port)
 
@@ -389,7 +295,7 @@
 - 日志输出会占用资源，生成固件建议关闭
 
 
-## 5-1 用户函数执行入口
+## 6-1 用户函数执行入口
 
 	void hekr_main(void)
 

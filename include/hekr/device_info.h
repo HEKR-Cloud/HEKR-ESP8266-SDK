@@ -1,4 +1,4 @@
-﻿#ifndef __DEVICE_INFO_H__
+#ifndef __DEVICE_INFO_H__
 #define __DEVICE_INFO_H__
 #include <esp_def.h>
 
@@ -17,9 +17,14 @@ typedef struct {
 }product_info_t;
 
  
-FUN_ATTRIBUTE char *get_tid(void);
-FUN_ATTRIBUTE bool product_info_load(product_info_t *info);
-FUN_ATTRIBUTE inline char *get_hekr_sdk_version(void);
+FUN_ATTRIBUTE 
+char *get_tid(void);
+
+FUN_ATTRIBUTE 
+bool product_info_load(product_info_t *info);
+
+FUN_ATTRIBUTE 
+char *get_hekr_sdk_version(void);
 
 #ifdef __cplusplus
 }

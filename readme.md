@@ -7,6 +7,13 @@
 - SDK示例代码 [`app/user/user_main.c`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/app/user/user_main.c)
 
 ##Change Log
+2015/9/23 17:30:55 
+
+1. 添加按键短按长按事件注册函数
+2. 添加设备状态获取接口
+3. 添加状态指示灯注册函数
+4. 修改升级接口
+
 2015/9/20 10:30:39 
 
 1. 更新了智能插座示例代码，带长按进入配置模式功能。

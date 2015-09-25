@@ -32,7 +32,7 @@
 <tr><th>文件</th><th>烧录地址(byte)</th><th>备注</th></tr>
 
 <tr><th>boot_v1.2.bin</th><th>0x00000</th><th>bootload</th></tr>
-<tr><th>esp_init_data_default.bin</th><th>0xFC000</th><th>存放RF的默认配置</th></tr>
+<tr><th>esp_init_data_default.bin</th><th>0x1FC000</th><th>存放RF的默认配置</th></tr>
 <tr><th>user1.bin</th><th>0x01000</th><th>用户固件</th></tr>
 <tr><th>SfsPart.bin</th><th>0x100000</th><th>文件系统</th></tr>
 <tr><th>blank.bin</th><th>0x1FE000</th><th>用于擦除Wi-Fi相关设置</th></tr>

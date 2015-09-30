@@ -10,7 +10,7 @@
 
 2015/9/30 18:24:31 
 
-1. 加入[快速入门文档](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf)
+1. 加入[快速入门](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf)文档
 2. 添加示例代码文件夹[`examples`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/tree/master/examples)
 
 2015/9/23 17:30:55 

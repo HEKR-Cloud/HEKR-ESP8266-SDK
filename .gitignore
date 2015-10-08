@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-.output
 *.s
 *.dump
 *.o
@@ -8,50 +6,14 @@ _temp_by_dltool
 *~
 /bin/at
 /app/user/src/.gitignore
-=======
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
-
-# Precompiled Headers
-*.gch
-*.pch
-
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
->>>>>>> 89f0a59f08bea96cef46783176070a96da5601fc
+/app/*
+/app/*.py
+/Project/.vs/Project_EspGemini2.2/v14/*.suo
 /Project/*.sdf
+/Project/*.sln
 /Project/*.suo
 /Project/*.vcxproj
 /Project/*.filters
 /Project/*.user
 /Project/esp_gemini/*.vcxproj
 /Project/esp_gemini/*.filters
-/Project/.vs/Project_EspGemini2.2/v14/*.suo
-/Project/*.filters
-/Project/*.user
-/Project/*
-/Project/*.suo
-/Project/*.vcxproj

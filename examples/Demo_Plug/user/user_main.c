@@ -19,6 +19,7 @@
 #include <log.h>
 #include <uart.h>
 #include <iotss.h>
+#include <device_info.h>
 #include "demo_plug.h"
 
 FUN_ATTRIBUTE
@@ -102,10 +103,8 @@ fail:
 FUN_ATTRIBUTE 
 void device_id_set(void)
 {
-	g_product_info.id.mid = PLUG_MID;
-	g_product_info.id.pid = PLUG_PID;
-	g_product_info.id.cid = PLUG_CID;
-
+	device_id_t id = { PLUG_MID ,PLUG_PID ,PLUG_CID };
+	set_device_id(id);
 }
 
 
@@ -118,7 +117,7 @@ void system_init_done(void)
 	iotss_bind_demo_plug(g_vm);
 	/*判断wifi设置是否存在*/
 	if (check_wifi_config_exist() == 0)
-		hekr_config_start(NULL, 5 * 60 * 1000);
+		start_hekr_config(NULL, 5 * 60 * 1000);
 }
 
 void inline plug_hardware_init(void)

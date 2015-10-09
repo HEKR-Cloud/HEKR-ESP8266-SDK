@@ -10,6 +10,9 @@
 #include <module_wifi.h>
 #include <log.h>
 #include <uart.h>
+#include <sys.h>
+#include <iotss.h>
+#include <device_info.h>
 
 
 FUN_ATTRIBUTE void test_hekr_config(config_event_t event)
@@ -30,10 +33,6 @@ FUN_ATTRIBUTE void debug_print_hex(uint8_t *data, size_t size)
 FUN_ATTRIBUTE void cloud_data_test(void *arg, size_t size)
 {
 	debug_print_hex((uint8_t *)arg, size);
-	if (((uint8_t *)arg)[0] == 0x01)
-	{
-		stop_hekr_config();
-	}
 	uint8_t test[] = { 0x56,0x48,0x34,0x98 };
 	switch (((uint8_t *)arg)[0])
 	{
@@ -42,9 +41,6 @@ FUN_ATTRIBUTE void cloud_data_test(void *arg, size_t size)
 		break;
 	case 0x02:
 		stop_hekr_config();
-		break;
-	case 0x03:
-		start_hekr_config(test_hekr_config, 50 * 1000);
 		break;
 	default:
 		break;
@@ -61,9 +57,23 @@ FUN_ATTRIBUTE void uart_test(uint8_t data)
 	}
 }
 
-FUN_ATTRIBUTE void system_init_done(void)
+FUN_ATTRIBUTE
+void device_id_set(void)
 {
-	start_hekr_config(test_hekr_config, 5*60 * 1000);
+	device_id_t id = { 39,1,51 };
+	set_device_id(id);
+}
+
+
+FUN_ATTRIBUTE
+void system_init_done(void)
+{
+	debug_print("system_init_done");
+	/*设置设备id*/
+	device_id_set();
+	/*判断wifi设置是否存在*/
+	if (check_wifi_config_exist() == 0)
+		start_hekr_config(NULL, 5 * 60 * 1000);
 }
 
 FUN_ATTRIBUTE void hekr_main(void)

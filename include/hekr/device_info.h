@@ -7,23 +7,25 @@ extern "C" {
 #endif
 
 
+typedef struct
+{
+	int32_t mid;
+	int32_t pid;
+	int32_t cid;
+}device_id_t;
+
 typedef struct {
-	struct
-	{
-		int32_t mid;
-		int32_t cid;
-		int32_t pid;
-	}id;
+	device_id_t id;
 }product_info_t;
 
  
-FUN_ATTRIBUTE 
+ 
 char *get_tid(void);
 
-FUN_ATTRIBUTE 
 bool product_info_load(product_info_t *info);
 
-FUN_ATTRIBUTE 
+void set_device_id(device_id_t id);
+ 
 char *get_hekr_sdk_version(void);
 
 #ifdef __cplusplus

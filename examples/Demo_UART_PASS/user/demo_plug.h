@@ -1,6 +1,7 @@
-#ifndef __DEMO_PLUG_H__
+﻿#ifndef __DEMO_PLUG_H__
 #define __DEMO_PLUG_H__
 
+#include <device_info.h>
 
 /*DEMO PLUG*/
 #define PRODUCT_FIRMWARE_VERSION	"1"
@@ -13,6 +14,7 @@
 #define PLUG_POWR_PIN	14
 #define PLUG_KEY_PIN	12  
 
+extern product_info_t g_product_info;
 
 char * FUN_ATTRIBUTE get_product_state(void);
 void FUN_ATTRIBUTE product_power_control(uint8 power);

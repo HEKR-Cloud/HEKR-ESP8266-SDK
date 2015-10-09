@@ -1,7 +1,7 @@
 #ifndef __SYS_H__
 #define __SYS_H__
 #include "esp_def.h"
-
+#include <gpio.h>
 
 typedef void (*hekr_system_init_done_cb_t)(void);
 typedef void (callbcak_handle_t)(void *arg);
@@ -20,4 +20,5 @@ uint8_t register_key_intrrupt_handle
 
 FUN_ATTRIBUTE
 void start_update(char *bin_url);
+void register_hekr_system_init_done_callback(hekr_system_init_done_cb_t handle);
 #endif

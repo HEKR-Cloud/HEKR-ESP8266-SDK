@@ -2,7 +2,7 @@
 **v1.0.5 by [xuefeng.zeng@hekr.me](mailto:xuefeng.zeng@hekr.me "xuefeng.zeng@hekr.me")** 2015/8/18 17:40:40 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
-	void start_hekr_config(hekr_config_event_cb_t event_cb, size_t timeout)
+	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)
 
 ### 参数
 
@@ -36,7 +36,7 @@
 
 ## 1-2 取消Wi-Fi 一键配置
 
-	void stop_hekr_config(void)
+	void hekr_config_stop(void)
 
 ### 参数
 

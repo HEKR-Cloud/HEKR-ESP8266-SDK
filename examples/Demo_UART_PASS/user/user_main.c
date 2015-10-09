@@ -32,7 +32,7 @@ FUN_ATTRIBUTE void cloud_data_test(void *arg, size_t size)
 	debug_print_hex((uint8_t *)arg, size);
 	if (((uint8_t *)arg)[0] == 0x01)
 	{
-		hekr_config_stop();
+		stop_hekr_config();
 	}
 	uint8_t test[] = { 0x56,0x48,0x34,0x98 };
 	switch (((uint8_t *)arg)[0])
@@ -41,10 +41,10 @@ FUN_ATTRIBUTE void cloud_data_test(void *arg, size_t size)
 		send_message_to_remote(NULL, test, sizeof(test));
 		break;
 	case 0x02:
-		hekr_config_stop();
+		stop_hekr_config();
 		break;
 	case 0x03:
-		hekr_config_start(test_hekr_config, 50 * 1000);
+		start_hekr_config(test_hekr_config, 50 * 1000);
 		break;
 	default:
 		break;
@@ -57,13 +57,13 @@ FUN_ATTRIBUTE void uart_test(uint8_t data)
 	os_printf("%02X", data);
 	if (data == 0x01)
 	{
-		hekr_config_stop();
+		stop_hekr_config();
 	}
 }
 
 FUN_ATTRIBUTE void system_init_done(void)
 {
-	hekr_config_start(test_hekr_config, 5*60 * 1000);
+	start_hekr_config(test_hekr_config, 5*60 * 1000);
 }
 
 FUN_ATTRIBUTE void hekr_main(void)

@@ -17,3 +17,4 @@ _temp_by_dltool
 /Project/*.user
 /Project/esp_gemini/*.vcxproj
 /Project/esp_gemini/*.filters
+*.opensdf

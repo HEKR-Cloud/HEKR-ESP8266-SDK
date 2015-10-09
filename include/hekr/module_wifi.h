@@ -56,9 +56,9 @@ typedef enum
 typedef void( *hekr_config_event_cb_t)(config_event_t event);
 
 
-FUN_ATTRIBUTE void	wifi_config_reset(void);
-FUN_ATTRIBUTE void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout);
-FUN_ATTRIBUTE void hekr_config_stop(void);
+void wifi_config_reset(void);
+void start_hekr_config(hekr_config_event_cb_t event_cb, size_t timeout);
+void stop_hekr_config(void);
 
 #ifdef __cplusplus
 }

@@ -1,8 +1,9 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.8 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 2015/9/23 17:24:55 
+**v1.0.9 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
+2015/10/10 11:49:36 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
-	void hekr_config_start(hekr_config_event_cb_t event_cb, size_t timeout)
+	void start_hekr_config(hekr_config_event_cb_t event_cb, size_t timeout)
 
 ### 参数
 
@@ -36,7 +37,7 @@
 
 ## 1-2 取消Wi-Fi 一键配置
 
-	void hekr_config_stop(void)
+	void stop_hekr_config(void)
 
 ### 参数
 
@@ -139,7 +140,7 @@
 
 ## 2-2 断开与服务器的连接
 
-	void disconnected_from_server(void)
+	void disconnect_from_server(void)
 
 ### 参数
 

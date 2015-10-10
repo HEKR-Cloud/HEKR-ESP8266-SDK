@@ -303,7 +303,7 @@
 ### 说明
 
 - 该函数在设备启动过程执行，初始化的函数放在此处执行。
-- 执行时间长的任务不要放在此处执行
+- 网络、Wi-Fi相关的函数请放在系统初始化完成后执行
 
 ### 示例
 
@@ -327,6 +327,29 @@
 ### 头文件
 
 - `无` 该函数用户自己定义
+
+## 6-2 注册系统初始化完成后的回调函数
+
+	void register_hekr_system_init_done_callback(hekr_system_init_done_cb_t handle)
+
+### 说明
+
+- 此函数代替`system_init_done_cb` 用户请不要再使用`system_init_done_cb`
+
+### 参数
+
+- `handle` 回调函数
+
+### 返回值
+
+- `无`
+
+### 头文件
+
+- `#inlcude <sys.h>`
+
+## 备注
+
 ## 备注
 
 **基于ESP8266 SDK 1.1.2开发， [ESP8266 通用API请参考 ESP官方文档](http://bbs.espressif.com/download/file.php?id=557)**

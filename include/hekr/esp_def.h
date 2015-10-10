@@ -25,7 +25,8 @@ extern "C" {
 
 
 
-#define malloc		os_malloc 
+#define malloc		os_malloc
+#define zalloc		os_zalloc
 #define memcpy		os_memcpy
 #define memset		os_memset
 #define memcmp		os_memcmp

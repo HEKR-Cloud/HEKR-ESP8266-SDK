@@ -17,9 +17,9 @@ typedef void(*cloud_conn_event_cb_t)(cloud_conn_event_t event);
 typedef void(*recicve_server_data_cb_t)(void *data, size_t size);
 
 
-FUN_ATTRIBUTE void  connect_server(cloud_conn_event_cb_t cb);
-FUN_ATTRIBUTE void  disconnect_from_server(void);
-FUN_ATTRIBUTE void  reconnect_cloud(void);
-FUN_ATTRIBUTE uint8_t send_message_to_remote(char *tid, void *data, size_t size);
-FUN_ATTRIBUTE void register_receive_server_data_callback(recicve_server_data_cb_t cb);
+void  connect_server(cloud_conn_event_cb_t cb);
+void  disconnect_from_server(void);
+void  reconnect_cloud(void);
+uint8_t send_message_to_remote(char *tid, void *data, size_t size);
+void register_receive_server_data_callback(recicve_server_data_cb_t cb);
 #endif

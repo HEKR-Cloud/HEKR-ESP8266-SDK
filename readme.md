@@ -2,9 +2,9 @@
 
 **by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
 
-- API见目录 [`document/esp8266_sdk_api.md`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266_SDK_API.md) [下载](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/raw/master/document/ESP8266_SDK_API.pdf)
-- 快速入门 [`document/ESP8266快速入门手册.pdf`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf) [下载](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/raw/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf)
-- SDK示例代码 [`app/user/user_main.c`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/examples)
+-  [API手册](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/raw/master/document/ESP8266_SDK_API.pdf)
+-  [快速入门手册](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/raw/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf)
+- [SDK示例代码](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/examples)
 
 ##Change Log
 
@@ -15,7 +15,7 @@
 
 2015/9/30 18:24:31 
 
-1. 加入[快速入门](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf)文档 
+1. 加入[快速入门手册](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/blob/master/document/ESP8266%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8%E6%89%8B%E5%86%8C.pdf) 
 2. 添加示例代码文件夹[`examples`](https://github.com/HEKR-Cloud/HEKR-ESP8266-SDK/tree/master/examples)
 
 2015/9/23 17:30:55 

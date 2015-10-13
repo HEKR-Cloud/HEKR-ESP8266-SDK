@@ -5,8 +5,8 @@
 /*DEMO PLUG*/
 #define PRODUCT_FIRMWARE_VERSION	"1"
 #define MNAME	"DEMO_PLUG"
-#define PLUG_MID		20
-#define PLUG_PID		11
+#define PLUG_MID		16
+#define PLUG_PID		1
 #define PLUG_CID		50
 
 /*product pin define*/

@@ -25,14 +25,14 @@
 FUN_ATTRIBUTE
 char * get_plug_state(void)
 {
-#define MSG "(state \"power\" 256)"
+#define MSG "(state \"power\" 256 \"timer\" 4294967296 \"timertodo\" 256\")"
 	uint8 state = GPIO_INPUT_GET(GPIO_ID_PIN(PLUG_POWR_PIN));
 	char *msg = (char *)os_zalloc(sizeof(MSG));
 	if (msg == NULL)
 	{
 		goto fail;
 	}
-	sprintf(msg, "(state \"power\" %u)", state);
+	sprintf(msg, "(state \"power\" %u \"timer\" 0 \"timertodo\" 0)", state);
 	
 done:
 	return msg;

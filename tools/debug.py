@@ -6,11 +6,11 @@ import thread
 
 cleanoldbin = 'rm -rf ../bin/upgrade/*.bin'
 
-downloadbin = './flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ../bin/upgrade/user1.bin'
+downloadbin = '../tools/flashtool.py --port /dev/ttyUSB0 -b 921600  write_flash --flash_size 16m  0x01000 ../bin/upgrade/user1.bin'
 
-downloadbin_all = './flashtool.py --port /dev/ttyUSB0 --baud 921600  write_flash --flash_size 16m 0x00000 ../bin/boot_v1.2.bin 0x01000 ../bin/upgrade/user1.bin 0x100000 ../bin/SfsPart.bin 0x1FE000 ../bin/blank.bin 0xFC000 ../bin/esp_init_data_default.bin'
+downloadbin_all = '../tools/flashtool.py --port /dev/ttyUSB0 --baud 921600  write_flash --flash_size 16m 0x00000 ../bin/boot_v1.2.bin 0x01000 ../bin/upgrade/user1.bin 0x100000 ../bin/SfsPart.bin 0x1FE000 ../bin/blank.bin 0x1FC000 ../bin/esp_init_data_default.bin'
 
-OpenUartDebug = "./serial_debug.py 9600"
+OpenUartDebug = "../tools/serial_debug.py 9600"
 
 make_one_bin = 'make APP=1'
 

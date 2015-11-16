@@ -112,6 +112,23 @@ void system_init_done(void)
 		start_hekr_config(NULL, 5 * 60 * 1000);
 }
 
+FUN_ATTRIBUTE
+void  hardware_init(void)
+{
+	/*注册状态指示灯*/
+	device_status_led_task_install(BIT4|BIT14, 0);
+
+	/*注册按键中断*/
+	register_key_intrrupt_handle
+		(
+			13,
+			GPIO_PIN_INTR_NEGEDGE,
+			3000,
+			NULL,
+			(callbcak_handle_t *)&wifi_config_reset
+		);
+}
+
 
 /*
  *  程序入口
@@ -124,6 +141,7 @@ void hekr_main(void)
 	system_log_set(PORT_UART1);
 	os_printf("\n\nsystem run !! \n\n");
 	os_printf("sdk ver=%s\n", get_hekr_sdk_version());
+	hardware_init();
 	register_uart_data_received_callback(uart_data_callbcak);
 	register_receive_server_data_callback(cloud_data_callbcak);
 	register_hekr_system_init_done_callback(system_init_done);

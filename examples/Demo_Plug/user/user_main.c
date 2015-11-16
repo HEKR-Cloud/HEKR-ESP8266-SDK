@@ -30,14 +30,11 @@ char * get_plug_state(void)
 	char *msg = (char *)os_zalloc(sizeof(MSG));
 	if (msg == NULL)
 	{
-		goto fail;
+		return NULL;
 	}
-	sprintf(msg, "(state \"power\" %u \"timer\" 0 \"timertodo\" 0)", state);
-	
-done:
+	sprintf(msg, "(state \"power\" %u \"timer\" 0 \"timertodo\" 0)", state);	
+
 	return msg;
-fail:
-	return NULL;
 }
 
 FUN_ATTRIBUTE
@@ -48,14 +45,11 @@ void  product_power_control(uint8 power)
 	if (msg == NULL)
 	{
 		os_printf("get_product_state error");
-		goto fail;
+		return;
 	}
 	send_data_to_cloud(msg, strlen(msg));
 	free(msg);
 
-done:
-	return;
-fail:
 	return;
 }
 

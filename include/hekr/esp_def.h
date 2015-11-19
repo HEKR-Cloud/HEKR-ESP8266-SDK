@@ -1,5 +1,6 @@
 #ifndef __ESP_DEF_H__
 #define __ESP_DEF_H__
+#include "esp_miss_header.h"
 #include <ets_sys.h>
 #include <os_type.h>
 #include <mem.h>

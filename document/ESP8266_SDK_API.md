@@ -1,5 +1,5 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.0.9 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
+**v1.1.0 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
 2015/10/10 11:49:36 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
@@ -73,8 +73,8 @@
 		GOT_SERVER_IP =6,				//通过DNS服务成功获取的服务器IP
 		LOGGED_IN_SERVER =7,			//成功登入服务器
 		HEKR_CONFIG_RUNNING =11,		//一件配置模式正在运行
-		SOFTAP_CONFIG_RUNNING =12,		//热点配置模式正在运行
-		LOG_PRINT_ENABLE =15			//LOG输出开启
+		SOFTAP_CONFIG_RUNNING =13,		//热点配置模式正在运行
+		LOG_PRINT_ENABLE =16			//LOG输出开启
 	}device_status_type_t;
 
 
@@ -128,12 +128,13 @@
 
 
 	typedef enum {
-		WIFI_DISCONNED = 0,		//Wi-Fi未连接
-		NO_ACCESSKEY,			//设备没有accesskey
-		DNS_ERROR,				//无法获取服务器IP
-		DEVICE_LOGIN_ERROR,		//设备登入服务器失败
-		DEVICE_LOGIN_SUCCESS,	//设备登入服务器成功
-		DISCONNED_FROM_CLOUD	//设备与服务器连接断开
+		CLOUD_EVEN_WIFI_DISCONNED = 0,		//Wi-Fi未连接
+		CLOUD_EVEN_NO_ACCESSKEY,			//设备没有accesskey
+		CLOUD_EVEN_DNS_ERROR,				//无法获取服务器ip
+		CLOUD_EVEN_DEVICE_LOGIN_ERROR,		//设备登入服务器失败
+		CLOUD_EVEN_DEVICE_LOGIN_SUCCESS,	//设备登入服务器成功
+		CLOUD_EVEN_DISCONNED_FROM_CLOUD,	//设备与服务器连接断开
+		CLOUD_EVEN_CONNECT_CLOUD_DISABLE	//设备连接服务器已被禁用
 	}cloud_conn_event_t;
 
 	typedef void(*cloud_conn_event_cb_t)(cloud_conn_event_t event);
@@ -172,11 +173,13 @@
 
 ## 3-1 设备升级
 
-	void start_update(char *bin_dir)
+	bool start_update(char *URL, char *MD5, char firmware_type)
 
 ### 参数
 
-- `bin_dir` 待升级固件的http地址
+- `URL` 待升级固件的http地址
+- `MD5` 固件的MD5校验码
+- `firmware_type` 固件类型 ('A'和'B')
 
 ### 返回值
 
@@ -188,22 +191,21 @@
 
 ###说明
 
-- 固件名格式：`*****1.bin` 和 `*****2.bin` 如：`user1.bin user2.bin` 
-- 固件1和2 要放在同一目录下，设备会自动下载对应的固件
 
 ### 示例
 
-	start_update("http://192.168.1.22/firmware1.bin");
+	start_update("http://192.168.1.22/firmware1.bin","d41d8cd98f00b204e9800998ecf8427e",'A');
 
 
 ##4-1 注册按键中断
 
-	uint8_t register_key_intrrupt_handle(
+	uint8_t register_key_intrrupt_handle
+	(
 		size_t pin,
 		GPIO_INT_TYPE intr_state,
 		size_t long_press_time,
-		callbcak_handle_t *short_press_handle,
-		callbcak_handle_t *long_press_handle)
+		callbcak_t *short_press_handle,
+		callbcak_t *long_press_handle)
 
 ### 参数
 
@@ -352,4 +354,4 @@
 
 ## 备注
 
-**基于ESP8266 SDK 1.1.2开发， [ESP8266 通用API请参考 ESP官方文档](http://bbs.espressif.com/download/file.php?id=557)**
+**基于ESP8266 SDK 1.4.0开发， [ESP8266 通用API请参考 ESP官方文档](http://bbs.espressif.com/download/file.php?id=557)**

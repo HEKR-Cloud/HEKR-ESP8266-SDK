@@ -4,21 +4,18 @@
 #include <gpio.h>
 
 typedef void (*hekr_system_init_done_cb_t)(void);
-typedef void (callbcak_handle_t)(void *arg);
+typedef void (callbcak_t)(void *arg);
 
-FUN_ATTRIBUTE  
 uint8_t  check_wifi_config_exist(void);
 
-FUN_ATTRIBUTE 
 uint8_t register_key_intrrupt_handle
 (
 	size_t pin,
 	GPIO_INT_TYPE intr_state,
 	size_t long_press_time,
-	callbcak_handle_t *short_press_handle,
-	callbcak_handle_t *long_press_handle);
+	callbcak_t *short_press_handle,
+	callbcak_t *long_press_handle);
 
-FUN_ATTRIBUTE
-void start_update(char *bin_url);
+bool start_update(char *URL, char *MD5, char firmware_type);
 void register_hekr_system_init_done_callback(hekr_system_init_done_cb_t handle);
 #endif

@@ -1,7 +1,6 @@
 #ifndef __USER_IOT_VERSION_H__
 #define __USER_IOT_VERSION_H__
 
-#include "user_config.h"
 
 #define IOT_VERSION_MAJOR		1U
 #define IOT_VERSION_MINOR		0U

@@ -10,8 +10,8 @@ typedef enum
 	GOT_SERVER_IP =6,				//通过DNS服务成功获取的服务器IP
 	LOGGED_IN_SERVER =7,			//成功登入服务器
 	HEKR_CONFIG_RUNNING =11,		//一件配置模式正在运行
-	SOFTAP_CONFIG_RUNNING =12,		//热点配置模式正在运行
-	LOG_PRINT_ENABLE =15			//LOG输出开启
+	SOFTAP_CONFIG_RUNNING =13,		//热点配置模式正在运行
+	LOG_PRINT_ENABLE =16			//LOG输出开启
 }device_status_type_t;
 
 typedef void device_status_change_callback_t(device_status_type_t item,uint8 current_state);

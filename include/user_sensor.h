@@ -1,7 +1,6 @@
 #ifndef __USER_SENSOR_H__
 #define __USER_SENSOR_H__
 
-#include "user_config.h"
 #include "driver/key.h"
 
 #define SENSOR_KEY_NUM    1

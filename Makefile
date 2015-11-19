@@ -188,7 +188,6 @@ OBINS := $(GEN_BINS:%=$(BINODIR)/%)
 
 CCFLAGS += 			\
 	-g			\
-	-O2			\
 	-Wpointer-arith		\
 	-Wundef			\
 	-Werror			\
@@ -198,7 +197,7 @@ CCFLAGS += 			\
 	-mlongcalls	\
 	-mtext-section-literals \
 	-ffunction-sections \
-	-fdata-sections    \
+	-fdata-sections
 #	-Wall			
 
 CFLAGS = $(CCFLAGS) $(DEFINES) $(EXTRA_CCFLAGS) $(INCLUDES)
@@ -284,9 +283,12 @@ else
 	@rm eagle.app.v6.*
 	@echo "Generate $(BIN_NAME).bin successully in folder bin/upgrade."
 	@echo "This firmware support $(flash)KiB flash"
-endif
 
-	@echo "!!!"
+endif
+	@echo ""
+	@echo "-------------------------"
+	@echo "Make firmware finish ^_^"
+	@echo "-------------------------"
 
 #############################################################
 # Rules base

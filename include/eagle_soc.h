@@ -55,8 +55,7 @@
 //}}
 
 //Periheral Clock {{
-#define  CPU_CLK_FREQ                                80*1000000       //unit: Hz
-#define  APB_CLK_FREQ                                CPU_CLK_FREQ
+#define  APB_CLK_FREQ                                80*1000000       //unit: Hz
 #define  UART_CLK_FREQ                               APB_CLK_FREQ
 #define  TIMER_CLK_FREQ                              (APB_CLK_FREQ>>8) //divided by 256
 //}}
@@ -246,8 +245,8 @@
 
 #define PIN_FUNC_SELECT(PIN_NAME, FUNC)  do { \
     WRITE_PERI_REG(PIN_NAME,   \
-                                READ_PERI_REG(PIN_NAME) \
-                                     &  (~(PERIPHS_IO_MUX_FUNC<<PERIPHS_IO_MUX_FUNC_S))  \
+                                (READ_PERI_REG(PIN_NAME) \
+                                     &  (~(PERIPHS_IO_MUX_FUNC<<PERIPHS_IO_MUX_FUNC_S)))  \
                                      |( (((FUNC&BIT2)<<2)|(FUNC&0x3))<<PERIPHS_IO_MUX_FUNC_S) );  \
     } while (0)
 

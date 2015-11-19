@@ -17,13 +17,15 @@ typedef enum {
 typedef enum {
     SC_TYPE_ESPTOUCH = 0,
     SC_TYPE_AIRKISS,
+	SC_TYPE_ESPTOUCH_AIRKISS,
 } sc_type;
 
 typedef void (*sc_callback_t)(sc_status status, void *pdata);
 
 const char *smartconfig_get_version(void);
-bool smartconfig_start(sc_type type, sc_callback_t cb, ...);
+bool smartconfig_start(sc_callback_t cb, ...);
 bool smartconfig_stop(void);
 bool esptouch_set_timeout(uint8 time_s); //15s~255s, offset:45s
+bool smartconfig_set_type(sc_type type);
 
 #endif

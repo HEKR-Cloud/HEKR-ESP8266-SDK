@@ -191,6 +191,7 @@
 
 ###说明
 
+- 如需使用APP进行OTA请到 [Hekr数据管理中心](http://poseidon.hekr.me/) 上传固件
 
 ### 示例
 

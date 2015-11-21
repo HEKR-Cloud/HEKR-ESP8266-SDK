@@ -125,7 +125,7 @@ void  hardware_init(void)
 			GPIO_PIN_INTR_NEGEDGE,
 			3000,
 			NULL,
-			(callbcak_handle_t *)&wifi_config_reset
+			(callbcak_t *)&wifi_config_reset
 		);
 }
 

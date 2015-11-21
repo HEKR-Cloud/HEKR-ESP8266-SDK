@@ -125,8 +125,8 @@ void inline plug_hardware_init(void)
 			PLUG_KEY_PIN,
 			GPIO_PIN_INTR_NEGEDGE,
 			3000,
-			(callbcak_handle_t *)&plug_power_change,
-			(callbcak_handle_t *)&wifi_config_reset
+			(callbcak_t *)&plug_power_change,
+			(callbcak_t *)&wifi_config_reset
 		);
 }
 

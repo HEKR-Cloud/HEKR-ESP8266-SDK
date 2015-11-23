@@ -1,4 +1,4 @@
-﻿#ifndef __MODULE_WIFI_H__
+#ifndef __MODULE_WIFI_H__
 #define __MODULE_WIFI_H__
 #include "esp_def.h"
 
@@ -58,6 +58,7 @@ typedef void( *hekr_config_event_cb_t)(config_event_t event);
 
 void wifi_config_reset(void);
 void start_hekr_config(hekr_config_event_cb_t event_cb, size_t timeout);
+void hekr_config_event_handle(config_event_t event);
 void stop_hekr_config(void);
 
 #ifdef __cplusplus

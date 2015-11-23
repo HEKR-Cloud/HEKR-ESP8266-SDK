@@ -37,9 +37,9 @@ extern struct iotss_vm *g_vm;
 struct iotss_static_bindings_item
 {
 	char *name;
+	uint32_t args_min;
 	void(*callback)(iotss_native_proc_args_t *args);
-	uint8_t args_min;
-	uint8_t args_max;
+	uint32_t args_max;
 	char *type_sig;
 	size_t len;
 	uint8_t checksum;
@@ -97,8 +97,10 @@ extern iotss_native_proc_arg_t *FUNC_MODIFIER iotss_native_proc_args_get_arg(iot
 
 /* Macro for initialize an item */
 #define IOTSS_STATIC_BINDINGS_ITEM(name, cb, args_min, args_max, type_sig) \
-{name, cb, args_min, args_max, type_sig, 0, 0}
+{name, args_min, cb, args_max, type_sig, 0, 0}
 #define IOTSS_STATIC_BINDINGS_ITEM_FINAL \
-{NULL, NULL, 0, 0, 0, 0, 0}
+{NULL, 0, NULL, 0, 0, 0, 0}
+#define IS_IOTSS_STATIC_BINDINGS_ITEM_FINAL(item) \
+    ((item)->name == NULL)
 
 #endif

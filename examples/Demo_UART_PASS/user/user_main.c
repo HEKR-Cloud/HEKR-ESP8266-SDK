@@ -109,7 +109,7 @@ void system_init_done(void)
 	device_id_set();
 	/*判断wifi设置是否存在*/
 	if (check_wifi_config_exist() == 0)
-		start_hekr_config(NULL, 5 * 60 * 1000);
+		start_hekr_config(&hekr_config_event_handle, 5 * 60 * 1000);
 }
 
 FUN_ATTRIBUTE

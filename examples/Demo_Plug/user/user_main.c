@@ -110,8 +110,11 @@ void system_init_done(void)
 	/*虚拟机扩展接口*/
 	iotss_bind_demo_plug(g_vm);
 	/*判断wifi设置是否存在*/
+	os_printf("check_wifi_config_exist=%u\n", check_wifi_config_exist());
 	if (check_wifi_config_exist() == 0)
-		start_hekr_config(NULL, 5 * 60 * 1000);
+	{
+		start_hekr_config(&hekr_config_event_handle, 5 * 60 * 1000);
+	}
 }
 
 void inline plug_hardware_init(void)

@@ -20,6 +20,9 @@
 														{ \
 															os_timer_disarm(P_TIMER); \
 															os_timer_setfn(P_TIMER, (os_timer_func_t *)FUNC, PARAM); \
+														}while(0)
+#define TIMER_START(P_TIMER,TIME,CYCLE)	do \
+														{ \
 															os_timer_arm(P_TIMER, TIME, CYCLE); \
 														}while(0)
 
@@ -31,7 +34,7 @@ typedef struct {
 	size_t size;
 }uart_data_t;
 
-uart_data_t *g_uart_data = NULL;
+uart_data_t *uart_data = NULL;
 
 FUN_ATTRIBUTE
 void hekr_config_callback(config_event_t event)
@@ -39,62 +42,54 @@ void hekr_config_callback(config_event_t event)
 	os_printf("event =%d\n", event);
 }
 
-FUN_ATTRIBUTE
-void debug_print_hex(uint8_t *data, size_t size)
-{
-	size_t i;
-	os_printf("HEX:");
-	for (i = 0; i < size; i++)
-	{
-		os_printf("%2X", data[i]);
-	}
-	os_printf("\n");
-}
+
 
 /*
 * @功能：收到云端数据，并从串口0发送出去
 */
-FUN_ATTRIBUTE
-void cloud_data_callbcak(void *data, size_t size)
+FUN_ATTRIBUTE  inline
+static void cloud_data_callbcak(void *data, size_t size)
 {
 	uart0_tx_buffer(data, size);
 }
 
 FUN_ATTRIBUTE
-void send_uartdata_to_cloud(void *arg)
+static void send_uartdata_to_cloud(void *arg)
 {
+	ETS_UART_INTR_DISABLE();
 	uart_data_t **data = arg;
 	send_message_to_remote(NULL, (*data)->buf, (*data)->size);
-	debug_print_hex((uint8_t *)(*data)->buf, (*data)->size);
-	free(*data);
-	*data = NULL;
+	(*data)->size = 0;
+	ETS_UART_INTR_ENABLE();
 }
 
 
 /*
  * @功能：将串口0收到的数据进行打包发送给云端
  */
-FUN_ATTRIBUTE
+
 void uart_data_callbcak(uint8_t data)
 {
 	static ETSTimer timer;
-	if (g_uart_data == NULL)
+	if (uart_data == NULL)
 	{
-		g_uart_data = malloc(sizeof(uart_data_t));
-		g_uart_data->size = 0;
+		uart_data = malloc(sizeof(uart_data_t));
+		if (uart_data == NULL) { return; }
+		uart_data->size = 0;
+		TIMER_REGISTER(&timer, send_uartdata_to_cloud, &uart_data, UART_DATA_PACKAGE_TIME_OUT, 0);
 	}
 
-	g_uart_data->buf[g_uart_data->size++] = data;
-	if (g_uart_data->size >= UART_DATA_BUF_LEN)
+	uart_data->buf[uart_data->size++] = data;
+	if (uart_data->size >= UART_DATA_BUF_LEN)
 	{
 		os_timer_disarm(&timer);
-		send_uartdata_to_cloud(g_uart_data);
+		send_uartdata_to_cloud(uart_data);
 	}
-	TIMER_REGISTER(&timer, send_uartdata_to_cloud, &g_uart_data, UART_DATA_PACKAGE_TIME_OUT, 0);
+	TIMER_START(&timer, UART_DATA_PACKAGE_TIME_OUT, 0);
 }
 
 FUN_ATTRIBUTE
-void device_id_set(void)
+static void device_id_set(void)
 {
 	device_id_t id = { 39,1,51 };
 	set_device_id(id);
@@ -116,7 +111,7 @@ FUN_ATTRIBUTE
 void  hardware_init(void)
 {
 	/*注册状态指示灯*/
-	device_status_led_task_install(BIT4|BIT14, 0);
+	device_status_led_task_install(BIT4 | BIT14, 0);
 
 	/*注册按键中断*/
 	register_key_intrrupt_handle
@@ -126,7 +121,7 @@ void  hardware_init(void)
 			3000,
 			NULL,
 			(callbcak_t *)&wifi_config_reset
-		);
+			);
 }
 
 

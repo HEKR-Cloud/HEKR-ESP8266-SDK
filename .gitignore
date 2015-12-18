@@ -18,3 +18,4 @@ _temp_by_dltool
 /Project/esp_gemini/*.vcxproj
 /Project/esp_gemini/*.filters
 *.opensdf
+*.opendb

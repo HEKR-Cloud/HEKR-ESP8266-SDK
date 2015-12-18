@@ -30,9 +30,25 @@ typedef enum iotss_native_proc_arg_type iotss_native_proc_arg_type_t;
 struct iotss_vm;
 typedef struct iotss_vm iotss_vm_t;
 struct iotss_native_proc_args;
-typedef struct iotss_native_proc_arg iotss_native_proc_args_t;
+typedef struct iotss_native_proc_arg iotss_native_proc_arg_t;
 
-extern struct iotss_vm *g_vm;
+
+struct iotss_native_proc_args
+{
+	iotss_native_proc_arg_t *begin;
+	iotss_native_proc_arg_t *end;
+	uint32_t size;
+
+	/* Return value */
+	iotss_native_proc_arg_t *ret;
+
+	/* Index for access randomly */
+	iotss_native_proc_arg_t **index;
+
+	struct iotss_vm *vm;
+	struct iotss_obj *env;
+};
+typedef struct iotss_native_proc_args iotss_native_proc_args_t;
 
 struct iotss_static_bindings_item
 {
@@ -46,6 +62,7 @@ struct iotss_static_bindings_item
 };
 typedef struct iotss_static_bindings_item iotss_static_bindings_item_t;
 
+extern struct iotss_vm *g_vm;
 /* Boolean */
 #ifndef __cplusplus 
 typedef enum
@@ -102,5 +119,4 @@ extern iotss_native_proc_arg_t *FUNC_MODIFIER iotss_native_proc_args_get_arg(iot
 {NULL, 0, NULL, 0, 0, 0, 0}
 #define IS_IOTSS_STATIC_BINDINGS_ITEM_FINAL(item) \
     ((item)->name == NULL)
-
 #endif

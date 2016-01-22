@@ -186,7 +186,7 @@ OIMAGES := $(GEN_IMAGES:%=$(IMAGEODIR)/%)
 BINODIR := $(ODIR)/$(TARGET)/$(FLAVOR)/bin
 OBINS := $(GEN_BINS:%=$(BINODIR)/%)
 
-CCFLAGS += 			\
+CCFLAGS += -O3			\
 	-g			\
 	-Wpointer-arith		\
 	-Wundef			\

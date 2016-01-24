@@ -11,7 +11,7 @@
 
 /*product pin define*/
 #define PLUG_POWR_PIN	14
-#define PLUG_KEY_PIN	12  
+#define PLUG_KEY_PIN	13  
 
 
 char * FUN_ATTRIBUTE get_product_state(void);

@@ -1,6 +1,6 @@
 # HEKR ESP8266 SDK 接口说明
-**v1.1.0 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
-2015/10/10 11:49:36 
+**v1.1.1 by [zengxuefeng@hekr.me](mailto:zengxuefeng@hekr.me "zengxuefeng@hekr.me")** 
+2016/1/26 17:37:04 
 ## 1-1 HekrConfig (Wi-Fi一键配置)
 
 	void start_hekr_config(hekr_config_event_cb_t event_cb, size_t timeout)
@@ -297,6 +297,28 @@
 ### 说明
 
 - 日志输出会占用资源，生成固件建议关闭
+
+## 5-3 设置Model key
+	
+	int set_model_key(const char *mk, size_t length)
+
+### 参数
+
+- `mk` mk的值。
+- `length` mk的长度不包括结束符`\0`
+
+### 返回值
+
+- `0` 成功
+- `-1` 失败
+
+### 头文件
+
+- `#include <device_info.h>`
+
+### 说明
+
+- 获取`mk`请到 [Hekr数据管理中心](http://poseidon.hekr.me/) 
 
 
 ## 6-1 用户函数执行入口

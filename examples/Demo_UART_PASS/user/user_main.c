@@ -119,6 +119,7 @@ static void device_id_set(void)
 {
 	device_id_t id = { 0,0,0 };
 	set_device_id(id);
+	set_model_key("", 0);
 }
 
 

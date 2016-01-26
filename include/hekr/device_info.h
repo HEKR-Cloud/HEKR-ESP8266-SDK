@@ -25,6 +25,8 @@ char *get_tid(void);
 bool product_info_load(product_info_t *info);
 
 void set_device_id(device_id_t id);
+
+int set_model_key(const char *mk, size_t length);
  
 char *get_hekr_sdk_version(void);
 

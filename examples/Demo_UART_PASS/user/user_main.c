@@ -117,7 +117,7 @@ void uart_data_callbcak(uint8_t data)
 FUN_ATTRIBUTE
 static void device_id_set(void)
 {
-	device_id_t id = { 0,0,0 };
+	device_id_t id = { 39,1,51 };
 	set_device_id(id);
 	set_model_key("", 0);
 }
